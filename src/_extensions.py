@@ -50,11 +50,16 @@ def get_literal(span):
         return span.text.lower()
     return rule.literal
 
+def get_asserted(span, exclusion_attrs=("is_negated", "is_historical", "is_uncertain", "is_hypothetical", "is_family")):
+    return not any([getattr(span._, attr) for attr in exclusion_attrs])
+
+
 _span_extensions = {
     "is_positive_existence": {"getter": get_positive_existence},
     # some of these below we may not use in our present 2021 Pneumonia project, but since they are in Moonstone and could be helpful,
     # I have added these here
     "is_ignored": {"default": False},
+    "is_asserted": {"getter": get_asserted},
     "snippet": {"getter": get_snippet},
     "literal": {"getter": get_literal}
 }

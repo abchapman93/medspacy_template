@@ -8,6 +8,8 @@ from medspacy.section_detection import SectionRule
 from medspacy.preprocess import PreprocessingRule
 from medspacy.io import DocConsumer
 
+from .document_classifier import DocumentClassifier
+
 RESOURCES_FOLDER = os.path.join(Path(__file__).resolve().parents[0], "resources")
 
 DOC_CONSUMER_ATTRS = {
@@ -38,6 +40,7 @@ RULE_CLASSES = {
     "sectionizer": SectionRule,
     "preprocessor": PreprocessingRule
 }
+
 
 def build_nlp(model=None, cfg_file=None, resources_dir=None,
               doc_consumer=False, doc_consumer_attrs=None, default_rules=True,
@@ -76,6 +79,10 @@ def add_rules_from_cfg(nlp, cfg_file=None, resources_dir=None):
         except KeyError:
             raise ValueError("Invalid component:", name)
         component.add(component_rules)
+
+    # Add document classifier
+    nlp.add_pipe("custom_document_classifier")
+
     return nlp
 
 def load_rules_from_cfg(cfg_file=None, resources_dir=None):

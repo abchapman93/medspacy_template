@@ -4,7 +4,7 @@ import pytest
 nlp = build_nlp()
 
 class TestSectionRules:
-    def test_pneumonia(self):
+    def test_pmh(self):
         texts = ["previous medical history", "PAST MEDICAL HISTORY"]
         docs = list(nlp.pipe(texts))
         for doc in docs:

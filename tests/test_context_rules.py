@@ -5,7 +5,7 @@ import pytest
 nlp = build_nlp()
 
 class TestContextModifiers:
-    def test_consolidation_negated(self):
+    def test_negated(self):
         text = "no evidence of pna"
         doc = nlp(text)
 

@@ -1,34 +1,32 @@
-from abc import ABC, abstractmethod
+from spacy import Language
 
-class BaseDocumentClassifier(ABC):
-    """Abstract base class for pneumonia document classifiers.
-    Classes inheriting from this will implement domain-specific logic for classifying documents.
-    Each inheriting class should have a method _classify_document(doc, **kwargs) which returns a string.
+@Language.factory("custom_document_classifier")
+class DocumentClassifier:
+    """
     """
     name = "document_classifier"
 
     _TARGET_CLASSES = set()
 
-    def __init__(self, classification_schema=None, debug=False):
-        self.classification_schema = classification_schema
+    def __init__(self, nlp, name="document_classifier", debug=False):
         self.debug = debug
         pass
 
-    def __call__(self, doc, normalized=False, classification_schema=None, **kwargs):
-        doc._.document_classification = self.classify_document(doc, normalized=normalized, classification_schema=classification_schema, **kwargs)
+    def __call__(self, doc, **kwargs):
+        doc._.document_classification = self.classify_document(doc, **kwargs)
         return doc
 
-    def classify_document(self, doc, normalized=False, classification_schema=None, **kwargs):
-        classification = self._classify_document(doc, classification_schema=classification_schema, **kwargs)
-        if normalized:
-            classification = self.normalize_document_classification(classification)
+    def classify_document(self, doc, **kwargs):
+        classification = self._classify_document(doc, **kwargs)
         return classification
 
-    @abstractmethod
-    def _classify_document(self, doc, classification_schema=None, **kwargs):
-        pass
+    def _classify_document(self, doc, **kwargs):
+        for ent in doc.ents:
+            if ent.label_ == "PNEUMONIA" and ent._.is_asserted:
+                if self.debug:
+                    print("Found asserted entity:", ent)
+                return "POS"
+        if self.debug:
+            print(f"No asserted ents: {doc.ents}")
+        return "NEG"
 
-    def normalize_document_classification(self, classification):
-        if classification == "POSSIBLE":
-            return "POS"
-        return classification
