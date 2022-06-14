@@ -1,0 +1,14 @@
+{
+    "target_rules": [
+        {
+            "literal": "pneumonia",
+            "category": "PNEUMONIA",
+            "pattern": [
+                {"LOWER":
+                    {"IN": ["pneumonia", "pna"]}
+                }
+            ]
+        }
+
+    ]
+}

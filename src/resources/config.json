@@ -1,0 +1,15 @@
+{
+  "resources": [
+    {
+      "target_matcher": [
+        "target_rules.json"
+      ],
+      "context": [
+        "context_rules.json"
+      ],
+      "sectionizer": [
+        "section_rules.json"
+      ]
+    }
+  ]
+}

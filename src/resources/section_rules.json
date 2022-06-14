@@ -1,0 +1,15 @@
+{
+    "section_rules": [
+        {
+            "literal": "Past Medical History",
+            "category": "past_medical_history",
+            "pattern": [
+                {"LOWER": {"IN": ["past", "previous"]}, "OP": "?"},
+                {"LOWER": "medical"},
+                {"LOWER": {"IN": ["history", "hx"]}},
+                {"LOWER": ":", "OP": "?"}
+            ]
+        }
+
+    ]
+}

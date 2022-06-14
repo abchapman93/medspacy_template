@@ -1,0 +1,10 @@
+{
+    "context_rules": [
+        {
+            "literal": "was confirmed",
+            "category": "POSITIVE_EXISTENCE",
+            "direction": "BACKWARD"
+        }
+
+    ]
+}
